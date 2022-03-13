@@ -1,0 +1,406 @@
+<!DOCTYPE html PUBLIC '-//W3C//DTD HTML 4.01 Transitional//EN'>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta content="IE=edge" http-equiv="X-UA-Compatible">
+
+<title>QR certificate</title>
+<style>
+        html,body{
+            width: 100%;
+            height: 100%;
+            font-family: "Arial Unicode", Sans-serif;
+            font-size: 16px;
+            margin: 0;
+        }
+
+        *{ box-sizing: border-box}
+
+
+
+        .covidCert{
+            max-width: 900px;
+            padding: 15px;
+        }
+        .covidCert .covidTop{
+            width: 100%;
+            display: flex;
+            align-items: center;
+        }
+
+        .covidCert .logoC,
+        .covidCert .patientC{
+            max-width: 200px;
+            max-height: 90px;
+            object-fit: contain;
+        }
+        .covidCert .patientC{
+            width: 100px;
+            max-height: 100px;
+            object-fit: contain;
+        }
+        .cert .patientC{width: 150px; max-height: 190px;}
+        .covidCert .medInfo{
+            width: 100%;
+            text-align: center;
+            line-height: 1.5;
+            font-size: 16px;
+            padding: 5px 15px 5px 0;
+        }
+        .covidCert .medInfo.nameCert{
+            background: #42816c;
+            text-align: center!important;
+            font-size: 1.2rem;
+            color:#fff;
+            padding: 10px;
+        }
+        .covidCert .covidTop.certGen{ margin-bottom: 20px}
+        .covidCert .covidTop.certGen  .medInfo{ text-align: left}
+        .covidCert .medInfo span{
+            display: inline-block;
+            line-height: normal;
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+        .covidCert .patientInfo{
+            line-height: 1.5;
+            font-size: 13px;
+            margin-top: 25px;
+        }
+        .covidCert .patientInfo > div{
+            align-items: center;
+        }
+        .covidCert .patientInfo div > div{
+            justify-content: space-between;
+            padding-left: 10px;
+        }
+        .patient_info {
+            width:100%;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: flex-start;
+            align-items: center;
+            text-align: left;
+
+        }
+        .covidCert .patient_info > div:first-child{
+           flex: 1;
+            min-width: 300px;
+            margin-top: 5px;
+            margin-bottom: 5px;
+        }
+        .covidCert .patient_info > div:last-child {
+            flex: 1;
+            min-width: 150px;
+            margin-top: 5px;
+            margin-bottom: 5px;
+        }
+        .covidCert .patient_info strong{
+            line-height: 1.1;
+            font-size: 0.9rem;
+        }
+        .covidCert .patient_info span em{ font-size: 12px; margin-right: 10px}
+        .covidCert .patientInfo .text_patient{
+            width:100%;
+            display: flex;
+            flex-wrap: wrap;
+        }
+
+        .covidCert .patientInfo .text_patient strong{ line-height: 1.1}
+        .covidCert .patientInfo .text_patient strong em{ font-size: 0.7rem; font-weight: normal}
+        .covidCert .patientInfo span em{ font-size: 12px; margin-right: 10px}
+        .covidCert .testTable{
+            width:100%;
+            display: table;
+            border-right: 1px solid #000;
+            border-bottom: 1px solid #000;
+            margin: 15px 0;
+        }
+        .covidCert .testTable .row{
+            display: table-row;
+        }
+        .covidCert .testTable .row.hd{
+            text-align: center;
+            font-weight: bold;
+            background:#eee;
+        }
+        .covidCert .testTable .row > div{
+            display: table-cell;
+            font-size: 12px;
+            border: 1px solid #000;
+            border-right:0;
+            border-bottom: 0;
+            padding: 5px;
+        }
+        .covidCert .testTable .row > div:last-child,
+        .covidCert .testTable .row > div:nth-last-child(2){
+            width: 150px;
+            text-align: center;
+        }
+        .covidCert .testDate{
+            font-size: 12px;
+        }
+        .covidCert .testDate strong{
+            font-size: 13px;
+        }
+        .covidCert .addressTest{
+            font-size: 12px;
+            margin-top: 20px;
+        }
+        .covidCert .addressTest span{
+            float: left;
+        }
+        .covidCert .addressTest span:nth-child(2){
+            line-height: 1.5;
+            font-weight: bold;
+            padding-left: 5px;
+        }
+        .covidCert .qr_block{
+            float: left;
+            width: 100%;
+            font-weight: bold;
+            font-size: 12px;
+            margin-top: 20px;
+        }
+        .covidCert .qr_text{
+            float: left;
+            font-weight: normal;
+            font-size: 12px;
+            margin-top: 10px;
+        }
+        .covidCert .mobileT{ display: none}
+        .covidCert .qrCode{
+            float:left;
+            width: 128px;
+            height: 128px;
+            margin-top: 5px;
+            margin-right:10px
+        }
+        .covidCert .qr_flex{
+            display: flex;
+            align-items: flex-start;
+        }
+        .covidCert .printHide{ display: inline}
+
+        .red{background:#f9d5dc;}
+        .green{background:#e1f9f4;}
+        .grey{background:#f8f8f8;}
+        .stateName {
+            width: 100%;
+            display: flex;
+            justify-content: space-between;
+            text-transform: uppercase;
+            font-weight: bold;
+            padding-bottom: 15px;
+        }
+        .cert_link {
+            color: #00507d;
+        }
+        @media screen and (max-width:750px) {
+            .covidCert .logoC{
+                max-width: 100px;
+            }
+            .covidCert .patientInfo > div{
+               align-items: flex-start;
+            }
+
+        }
+        @media screen and (max-width:710px) {.stateName{display: none}}
+        @media screen and  (max-width:610px) {
+            .covidCert .testTable{ display: none}
+            .covidCert .mobileT{ display: table}
+            .covidCert .covidTop div:nth-child(2){order: 3}
+            .covidCert .covidTop div:nth-child(3){order: 2}
+            .covidCert .covidTop{
+                justify-content: space-between;
+                flex-wrap: wrap;
+            }
+            .covidCert .covidTop.certGen {
+                justify-content: center;
+            }
+
+            .covidCert .medInfo{
+                text-align: center!important;
+                padding: 5px 15px;
+                margin-top: 15px;
+            }
+            .covidCert .medInfo.nameCert {
+                font-size: 1rem;
+            }
+        }
+        @media screen and (max-width:500px) {
+            .covidCert .qr_block{ text-align: center}
+            .covidCert .qrCode{
+                float: none;
+                margin: 10px auto auto auto;
+            }
+            .covidCert .qr_flex{ display: block}
+            .covidCert .cert > div{ display: block!important; text-align: center}
+            .covidCert .cert .patient_info{ text-align: center; padding-left: 0}
+            covidCert .cert .patient_info > div{ padding-left: 0!important;}
+        }
+
+        @media print{
+            html{
+                font-size: 15px;
+            }
+            .stateName {display: block}
+            .stateName span{ width: 33.3%; display: inline-block;font-size: 15px;}
+            .stateName span:nth-child(2){  text-align: center}
+            .stateName span:nth-child(3){  text-align: right}
+            .table_print{ width: 100%; display: table}
+            .covidTop .certGen{ display: table-row}
+            .table_print .medInfo{width: 100%; display: table-cell;  }
+            .covidCert .table_print .covidTop{display: table-row}
+            .covidCert .table_print .covidTop > div{ display: table-cell;}
+            .covidCert .table_print .covidTop:nth-child(2){  white-space: normal}
+            .covidCert .covidTop > *{ vertical-align: middle}
+            .covidCert .medInfo {width: calc(100% - 210px); display: inline-block;}
+            .covidCert .patientInfo{width:100%;display: table}
+            .table_print.patientInfo > div{ display: table-row!important;}
+
+            .covidCert .table_print.patientInfo > div > div{
+                display: table-cell;
+                vertical-align: middle;
+            }
+            .covidCert .patientInfo div > div{
+                display: inline-block;
+                vertical-align: top;
+            }
+            .covidCert .patientInfo .text_patient > div:last-child{float: right;}
+            .covidCert .patientC{ max-height: none;}
+            @page{  margin:20px 0 0 20px; padding:0}
+            br{
+                line-height: 10pt;
+            }
+            covidCert .medInfo{
+                margin-top: 8pt;
+            }
+            .covidCert .addressTest{
+                margin-top: 8pt;
+            }
+            .covidCert .testTable{
+                margin-bottom: 0;
+            }
+            .covidCert .qr_block{
+                margin-top: 5pt;
+            }
+            .covidCert .logoC{
+                max-width: 100px;
+            }
+            .covidCert .printHide{ display: none}
+            * {
+                -webkit-print-color-adjust: exact !important;   /* Chrome, Safari */
+                color-adjust: exact !important;                 /*Firefox*/
+            }
+        }
+
+    </style>
+</head>
+<body>
+<div class="covidCert">
+<div class="stateName"><span>Հայաստանի Հանրապետություն</span><span>Republic of Armenia</span><span>Республика Армения</span></div> <div class="table_print">
+<div class="covidTop certGen">
+<div class="medInfo">
+<span>Հայաստանի Հանրապետությունում էլեկտրոնային <br>առողջապահության միասնական տեղեկատվական համակարգ</span><br>
+<span><strong>The United Information System of Electronic <br>Healthcare in the Republic of Armenia</strong></span><br>
+<span>Единая Информационная Система Электронного <br>Здравоохранения в Республике Армения</span><br>
+</div>
+<img src="data:image/png;base64,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" class="logoC">
+</div>
+</div>
+<div class="table_print">
+<div class="covidTop certGen">
+<div class="medInfo nameCert">
+<span>COVID-19 ՊԱՏՎԱՍՏՄԱՆ ՍԵՐՏԻՖԻԿԱՏ</span><br>
+<span>COVID-19 VACCINATION CERTIFICATE</span><br>
+<span>СЕРТИФИКАТ ВАКЦИНАЦИИ COVID-19</span><br>
+</div>
+ </div>
+</div>
+<div class="patientInfo cert table_print">
+<div style="display: flex">
+<img style="" src="20220313_011514.jpg" class="patientC">
+<div class="text_patient">
+<div>
+<div class="patient_info">
+<div><em>Անուն / Имя<br>
+<strong>Given Name</strong></em></div>
+<div><strong>ԱԼԵՏԱ<br>ALETA</strong></div>
+</div>
+<div class="patient_info">
+<div><em>Ազգանուն <br>
+<strong>Surname</strong> / Фамилия</em></div>
+<div><strong>ԱՎԱՆԵՍՅԱՆ<br>AVANESYAN</strong></div>
+</div>
+<div class="patient_info">
+<div><em>Ծննդյան ամսաթիվ<br>
+<strong>Date of Birth</strong> / Дата рождения</em></div>
+<div><strong>03/**/****</strong></div>
+</div>
+<div class="patient_info">
+<div><em>Անձնագրի / Նույն. քարտի համարը<br>
+<strong>Passport / ID No</strong> / Номер паспорта / ИК</em></div>
+<div><strong></strong></div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="testTable">
+<div class="row hd">
+<div style="width: 200px;">Պատվաստանյութի անվանում<br>Vaccine name<br>Наименование вакцины</div><div style="width: 200px;font-size: 10px;">Գրանցման հավաստագրի իրավատեր/արտադրող<br>Vaccine marketing authorization holder or manufacturer<br>Владелец регистрационного удостоверения/производитель</div><div>Սերիա<br>Batch<br>Серия</div><div>Պատվաստման ամսաթիվը/<br>Vaccine date/<br>Дата вакцинации</div><div>Պատվաստող բուժհաստատություն<br>Certificate issuer<br>Медицинское учреждение</div>
+</div>
+<div class="row">
+<div>
+Moderna (mRNA-1273) (1/2) <br><br><a class="cert_link" name="certlink" target="_blank" href="https://qrarmmed.github.io/"> EU
+Սերտիֆիկատի համար սեղմեք այստեղ <img style="float:left; margin-right:5px;width: 65px;" src="gg.png" /></a>
+</div>
+<div>
+Մոդերնա Բիոտեք<br>Moderna Biotech<br>Модерна Биотек<br> </div>
+<div>079F21A </div>
+<div style="font-weight: bold">01/02/2022</div>
+<div>Գեղակերտի ԲԱ ՀՈԱԿ<br>&quot;GEGHAKERT MEDICAL AMBULATORY&quot; CNCO<br>МНО &quot;МЕДИЦИНСКАЯ АМБУЛАТОРИЯ ГЕХАКЕРТА&quot;</div>
+</div>
+</div>
+<div class="testTable mobileT">
+<div class="row hd">
+<div>Արտադրական անվանում/Vaccine medical product/Название вакцины</div><div style="width: 200px;">Պատվաստող բուժհաստատություն/Certificate issuer/Медицинское учреждение</div>
+</div>
+<div class="row">
+<div>Moderna (mRNA-1273) (1/2)<br>
+01/02/2022<br>073F29A<br>Moderna Biotech <br><a class="cert_link" name="certlink" target="_blank" href="https://qrarmmed.github.io/"> EU Սերտիֆիկատի
+համար սեղմեք այստեղ <br /><img style="width: 65px; margin-top: 5px" src="gg.png" /></a><br>
+</div>
+<div>Գեղակերտի ԲԱ ՀՈԱԿ<br>&quot;GEGHAKERT MEDICAL AMBULATORY&quot; CNCO<br>МНО &quot;МЕДИЦИНСКАЯ АМБУЛАТОРИЯ ГЕХАКЕРТА&quot;</div>
+</div>
+</div>
+<br>
+<div class="qr_block" style="page-break-inside: avoid;">
+
+<div class="qr_flex">
+<div id='622d071c208bc_qrTarget' class="qrCode">
+<img style="width: 128px;height: 128px;" src="qrcode.png" />
+</div>
+<div class="qr_text" style="margin-top: 0px;">
+Սկանավորեք QR կոդը արդյունքները<br>
+<strong>Էլեկտրոնային Առողջապահության Ազգային Օպերատորի</strong> կայքում տեսնելու
+համար<br> <strong>Scan QR code to see the results on the site of</strong><br>
+<strong>National eHealth Operator</strong><br> Сканируйте QR код для просмотра результатов на сайте<br>
+<strong>национального oператора электронного здравоохранения</strong><br>
+Նույնականացման համար<br>
+Unique certificate identifier<br>
+Идентификационный номер<br>
+<strong>15045244A978496453C4A2503610822056864765CC427614</strong>
+</div>
+</div>
+<br>
+Սերտիֆիկատն արտահանված է (տպված է) ԱՐՄԵԴ համակարգից, (պացիենտի կողմից), 13/03/2022 00:48 <br>
+The certificate is exported (printed) from ARMED system, (by patient), 13/03/2022 00:48 <br>
+Сертификат экспортирован из системы ARMED, (пациентом), 13/03/2022 00:48 </div>
+<br style="clear: both"><div style="float: left; width: 100%; clear: both">
+</div>
+</div>
+<script defer src="https://static.cloudflareinsights.com/beacon.min.js/v652eace1692a40cfa3763df669d7439c1639079717194" integrity="sha512-Gi7xpJR8tSkrpF7aordPZQlW2DLtzUlZcumS8dMQjwDHEnw9I7ZLyiOj/6tZStRBGtGgN6ceN6cMH8z7etPGlw==" data-cf-beacon='{"rayId":"6eaf75649cd56921","token":"b7963ac30e254a589148a507713f3517","version":"2021.12.0","si":100}' crossorigin="anonymous"></script>
+</body></html>
